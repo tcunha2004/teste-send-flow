@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T20:22:54.204933+00:00",
+  "title": "Design System: Broadcast",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Azul de ação",
+        "canonical": "#2563eb",
+        "tonalRamp": [
+          "oklch(15% 0.18 255)",
+          "oklch(25% 0.18 255)",
+          "oklch(35% 0.18 255)",
+          "oklch(45% 0.18 255)",
+          "oklch(55% 0.18 255)",
+          "oklch(65% 0.18 255)",
+          "oklch(80% 0.18 255)",
+          "oklch(95% 0.18 255)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Branco de superfície",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 247)",
+          "oklch(25% 0 247)",
+          "oklch(35% 0 247)",
+          "oklch(45% 0 247)",
+          "oklch(55% 0 247)",
+          "oklch(65% 0 247)",
+          "oklch(80% 0 247)",
+          "oklch(95% 0 247)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Fundo claro",
+        "canonical": "oklch(98.4% 0.003 247.858)",
+        "tonalRamp": [
+          "oklch(15% 0.003 247)",
+          "oklch(25% 0.003 247)",
+          "oklch(35% 0.003 247)",
+          "oklch(45% 0.003 247)",
+          "oklch(55% 0.003 247)",
+          "oklch(65% 0.003 247)",
+          "oklch(80% 0.003 247)",
+          "oklch(95% 0.003 247)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Borda suave",
+        "canonical": "oklch(92.9% 0.013 255.508)",
+        "tonalRamp": [
+          "oklch(15% 0.013 255)",
+          "oklch(25% 0.013 255)",
+          "oklch(35% 0.013 255)",
+          "oklch(45% 0.013 255)",
+          "oklch(55% 0.013 255)",
+          "oklch(65% 0.013 255)",
+          "oklch(80% 0.013 255)",
+          "oklch(95% 0.013 255)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Texto principal",
+        "canonical": "rgba(0, 0, 0, 0.87)",
+        "tonalRamp": [
+          "oklch(15% 0 247)",
+          "oklch(25% 0 247)",
+          "oklch(35% 0 247)",
+          "oklch(45% 0 247)",
+          "oklch(55% 0 247)",
+          "oklch(65% 0 247)",
+          "oklch(80% 0 247)",
+          "oklch(95% 0 247)"
+        ]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Texto secundário",
+        "canonical": "oklch(44.6% 0.043 257.281)",
+        "tonalRamp": [
+          "oklch(15% 0.043 257)",
+          "oklch(25% 0.043 257)",
+          "oklch(35% 0.043 257)",
+          "oklch(45% 0.043 257)",
+          "oklch(55% 0.043 257)",
+          "oklch(65% 0.043 257)",
+          "oklch(80% 0.043 257)",
+          "oklch(95% 0.043 257)"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Texto discreto",
+        "canonical": "oklch(55.4% 0.046 257.417)",
+        "tonalRamp": [
+          "oklch(15% 0.046 257)",
+          "oklch(25% 0.046 257)",
+          "oklch(35% 0.046 257)",
+          "oklch(45% 0.046 257)",
+          "oklch(55% 0.046 257)",
+          "oklch(65% 0.046 257)",
+          "oklch(80% 0.046 257)",
+          "oklch(95% 0.046 257)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Título de tela",
+        "purpose": "Título principal da tarefa."
+      },
+      "body": {
+        "displayName": "Corpo",
+        "purpose": "Texto e instruções."
+      },
+      "supporting": {
+        "displayName": "Texto de apoio",
+        "purpose": "Ajuda e metadados."
+      }
+    },
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "0px"
+      },
+      {
+        "name": "sm",
+        "value": "600px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "lg",
+        "value": "1200px"
+      },
+      {
+        "name": "xl",
+        "value": "1536px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Ação principal",
+      "kind": "button",
+      "description": "Referência para implementação futura: uma ação principal por região.",
+      "html": "<button class=\"ds-button ds-primary\">Criar conexão</button>",
+      "css": ".ds-button{font:500 14px/1.75 system-ui,sans-serif;padding:8px 16px;min-height:44px;border-radius:4px;border:1px solid transparent;cursor:pointer;} .ds-button:focus-visible{outline:2px solid #2563eb;outline-offset:3px;} .ds-button:disabled{opacity:.5;cursor:default;}.ds-primary{background:#2563eb;color:#fff;} .ds-primary:hover:not(:disabled){background:rgb(25,69,164);} .ds-primary:active:not(:disabled){background:#163b8c;}"
+    },
+    {
+      "name": "Ação secundária",
+      "kind": "button",
+      "description": "Referência para implementação futura: ações de apoio.",
+      "html": "<button class=\"ds-button ds-secondary\">Cancelar</button>",
+      "css": ".ds-button{font:500 14px/1.75 system-ui,sans-serif;padding:8px 16px;min-height:44px;border-radius:4px;border:1px solid transparent;cursor:pointer;} .ds-button:focus-visible{outline:2px solid #2563eb;outline-offset:3px;} .ds-button:disabled{opacity:.5;cursor:default;}.ds-secondary{background:#fff;color:#2563eb;border-color:#2563eb;} .ds-secondary:hover:not(:disabled){background:#eff6ff;} .ds-secondary:active:not(:disabled){background:#dbeafe;}"
+    },
+    {
+      "name": "Campo de texto",
+      "kind": "input",
+      "description": "Referência para implementação futura: rótulo persistente e foco visível.",
+      "html": "<label class=\"ds-field\">Nome da conexão<input class=\"ds-input\" type=\"text\" placeholder=\"Ex.: Clientes da loja\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;color:rgba(0,0,0,.87);font:400 14px/1.5 system-ui,sans-serif;} .ds-input{font:400 16px/1.5 system-ui,sans-serif;min-height:44px;padding:8px 12px;border:1px solid #64748b;border-radius:4px;background:#fff;color:rgba(0,0,0,.87);} .ds-input:hover{border-color:#334155;} .ds-input:focus-visible{outline:2px solid #2563eb;outline-offset:2px;} .ds-input::placeholder{color:#64748b;}"
+    },
+    {
+      "name": "Chip de identidade",
+      "kind": "chip",
+      "description": "Representação da identificação Broadcast presente na tela inicial.",
+      "html": "<span class=\"ds-chip\">Broadcast</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;border-radius:16px;padding:3px 12px;background:#2563eb;color:#fff;font:400 13px/18px system-ui,sans-serif;}"
+    },
+    {
+      "name": "Painel",
+      "kind": "card",
+      "description": "Representação da superfície clara e plana presente na tela inicial.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-title\">Suas mensagens, organizadas.</h2><p class=\"ds-body\">Gerencie conexões, organize contatos e prepare mensagens para enviar agora ou agendar.</p></section>",
+      "css": ".ds-panel{padding:32px;border:1px solid oklch(92.9% .013 255.508);border-radius:1rem;background:#fff;color:rgba(0,0,0,.87);font-family:system-ui,sans-serif;} .ds-title{margin:0 0 16px;font-size:2.125rem;line-height:1.235;font-weight:600;} .ds-body{margin:0;color:oklch(44.6% .043 257.281);font-size:16px;line-height:1.5;}",
+      "refersTo": "panel"
+    }
+  ],
+  "narrative": {
+    "northStar": "Organização tranquila",
+    "overview": "Uma interface clara e funcional, em que o usuário identifica a conexão atual, encontra seus contatos e entende o estado de cada mensagem. A personalidade aparece no azul das ações, no ritmo dos espaços e no texto direto. Os componentes Material UI fornecem uma linguagem familiar para tarefas recorrentes.\n\nEste guia vale para cadastro, login, conexões, contatos e mensagens. A direção foi confirmada pelo usuário. O frontmatter registra a base encontrada no tema e na tela inicial; as orientações abaixo estabelecem os padrões para as próximas implementações. Não significa que as telas ou todos os componentes já foram construídos ou verificados.",
+    "keyCharacteristics": [
+      "Fundos claros, superfícies brancas e destaque azul.",
+      "Tipografia do sistema com hierarquia curta e legível.",
+      "Profundidade discreta e bordas para separar regiões.",
+      "Ações explícitas, estados compreensíveis e comportamento consistente.",
+      "Adaptação ao celular sem perder ações ou informações essenciais."
+    ],
+    "rules": [
+      {
+        "name": "The Action Color Rule.",
+        "body": "Reservar o azul para interação, seleção e orientação. Não preencher todas as regiões com a cor primária nem usar cor como única forma de comunicar um estado.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Rule.",
+        "body": "Validar contraste de texto normal de pelo menos 4,5:1, texto grande de 3:1 e limites essenciais de controles e foco de 3:1. São critérios de implementação, ainda não uma certificação das telas.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hierarchy Rule.",
+        "body": "Uma tela tem um título principal e uma sequência coerente de seções. A variante visual não substitui a semântica: definir `component=\"h1\"`, `h2` e demais níveis conforme a estrutura.",
+        "section": "typography"
+      },
+      {
+        "name": "The Context Rule.",
+        "body": "Nome da conexão, título da tarefa e status relevante devem ser encontráveis sem depender de cor, hover ou do tamanho da tela.",
+        "section": "layout"
+      },
+      {
+        "name": "The Depth Rule.",
+        "body": "Profundidade deve explicar sobreposição ou prioridade, não ornamentar cada bloco de conteúdo.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Consultar este guia antes de criar telas e componentes.",
+      "Centralizar tokens e overrides no tema Material UI; usar Tailwind para layout e espaçamento com a mesma escala.",
+      "Criar componentes compartilhados quando houver repetição real, mantendo a implementação simples.",
+      "Aplicar a mesma semântica de cor, status, ação e erro em todas as funcionalidades.",
+      "Verificar cada fluxo alterado em desktop e celular, incluindo teclado e estados relevantes.",
+      "Seguir STEPS.md e verificar isolamento entre clientes nas etapas que envolvam dados.",
+      "Atualizar este guia quando uma decisão visual aprovada mudar; extrair tokens reais conforme a implementação amadurecer."
+    ],
+    "donts": [
+      "Criar temas, escalas de espaçamento ou variantes independentes para cada tela.",
+      "Sobrescrever a mesma propriedade simultaneamente no tema, em `sx` e no Tailwind sem uma razão clara.",
+      "Tratar os padrões futuros descritos aqui como componentes já implementados.",
+      "Usar apenas cor, placeholder, hover ou ícone sem nome para comunicar informação essencial.",
+      "Mostrar clientes, métricas ou confirmações de entrega fictícias.",
+      "Adicionar fluxos ou dashboards fora do teste técnico para preencher espaço.",
+      "Marcar etapas como concluídas apenas por terem sido documentadas."
+    ]
+  }
+}

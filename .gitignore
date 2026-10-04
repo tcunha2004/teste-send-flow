@@ -1,0 +1,16 @@
+node_modules/
+dist/
+functions/lib/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.log
+.firebase/
+.emulator-data/
+.DS_Store
+web/test-results/
+web/playwright-report/
+.codex/
+.impeccable/review/
+.impeccable/config.local.json
