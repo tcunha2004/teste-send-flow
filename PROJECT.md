@@ -236,4 +236,4 @@ O foco é entregar o fluxo pedido com código organizado, dados bem modelados, i
 - [x] Código organizado com funções e componentes funcionais;
 - [x] Instruções para configurar e executar o projeto documentadas ao final do desenvolvimento.
 
-Verificações locais concluídas. A execução automática e o link na nuvem permanecem pendentes conforme a etapa 10 de STEPS.md.
+Verificações locais e publicação concluídas. Aplicação em https://teste-send-flow.web.app; a mudança automática de status pelo Cloud Scheduler foi confirmada sem navegador aberto conforme a etapa 10 de STEPS.md.

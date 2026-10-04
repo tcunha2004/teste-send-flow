@@ -77,15 +77,15 @@ Verificado: cinco testes de integração com Chromium e emuladores passaram (`np
 
 **Verificar:** os requisitos do `PROJECT.md` estão atendidos e as verificações passam.
 
-Verificado em 04/10/2026: `npm run test:smoke` passou com CRUD completo, duas contas, rejeição de acesso sem login e entre clientes, bloqueio de gravações diretas, contatos de outra conexão, validação de texto/destinatários/horários, preservação de histórico, edição de enviadas sem novo envio, processamento controlado de agendadas, idempotência, exclusão sem recriação e cascata. Os seis testes de navegador passaram, incluindo o fluxo de conexão, contato, envio, agendamento, filtros, edição e exclusão. Typecheck, lint e build de produção passaram. Conexões, contatos e mensagens foram inspecionados em desktop e celular. A execução periódica na nuvem ainda depende da publicação da etapa 10.
+Verificado em 04/10/2026: `npm run test:smoke` passou com CRUD completo, duas contas, rejeição de acesso sem login e entre clientes, bloqueio de gravações diretas, contatos de outra conexão, validação de texto/destinatários/horários, preservação de histórico, edição de enviadas sem novo envio, processamento controlado de agendadas, idempotência, exclusão sem recriação e cascata. Os seis testes de navegador passaram, incluindo o fluxo de conexão, contato, envio, agendamento, filtros, edição e exclusão. Typecheck, lint e build de produção passaram. Conexões, contatos e mensagens foram inspecionados em desktop e celular. A execução periódica na nuvem foi verificada na etapa 10.
 
 ## 10. Publicar e documentar
 
 - [x] Configurar o projeto Firebase na nuvem, Authentication e Firestore; habilitar o faturamento necessário para Functions e agendamento.
-- [ ] Publicar regras, índices, Functions e frontend; configurar o frontend para os serviços da nuvem.
-- [ ] Agendar uma mensagem, fechar a aplicação e verificar depois a alteração automática de status.
+- [x] Publicar regras, índices, Functions e frontend; configurar o frontend para os serviços da nuvem.
+- [x] Agendar uma mensagem, fechar a aplicação e verificar depois a alteração automática de status.
 - [x] Finalizar o README com instalação, configuração, execução local, publicação e decisões técnicas.
 
 **Verificar:** a aplicação publicada funciona e outra pessoa consegue executar o projeto seguindo o README.
 
-Em publicação: Blaze habilitado pelo usuário e CLI autenticada; Authentication por email/senha e banco Firestore nativo existentes foram conferidos. `npm run deploy` iniciado às 17:51. A criação das Functions e do Scheduler e a verificação do link permanecem pendentes até a conclusão do primeiro deploy.
+Verificado na nuvem em 04/10/2026: Hosting em https://teste-send-flow.web.app, regras e índices publicados, onze Functions ativas e job do Cloud Scheduler habilitado a cada minuto. Cadastro, conexão, contato e envio imediato passaram no site publicado. Uma mensagem agendada mudou automaticamente para Enviada sem navegador aberto. A primeira execução do job levou alguns minutos após a criação. Retenção de imagens de Functions configurada para um dia. Código concluído e commitado antes de 17:55; Hosting publicado antes das 18:00; verificação final da rotina concluída às 18:02.

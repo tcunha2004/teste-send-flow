@@ -2,7 +2,7 @@
 
 Aplicação de broadcast com React, TypeScript, Vite, Material UI, Tailwind CSS e Firebase. Envio exclusivamente simulado, sem integração com SMS ou WhatsApp.
 
-Implementados: autenticação, CRUD de conexões e contatos, seleção de destinatários, envio imediato, agendamento, filtros e edição/exclusão de mensagens. As listas atualizam em tempo real e cada conta acessa apenas seus dados. As etapas 1–9 foram verificadas localmente. A publicação e a execução automática na nuvem estão pendentes.
+Implementados: autenticação, CRUD de conexões e contatos, seleção de destinatários, envio imediato, agendamento, filtros e edição/exclusão de mensagens. As listas atualizam em tempo real e cada conta acessa apenas seus dados. As etapas 1–9 foram verificadas localmente. A aplicação foi publicada em https://teste-send-flow.web.app; cadastro, criação de conexão/contato e envio imediato foram verificados na nuvem.
 
 Referências: [escopo](./PROJECT.md), [arquitetura](./ARCHITECTURE.md), [etapas](./STEPS.md) e [design system](./web/DESIGN.md).
 
@@ -123,4 +123,4 @@ O projeto usa npm workspaces e um único lockfile. A lógica é funcional, com c
 
 Limites do teste: nomes de até 100 caracteres, telefones com 6 a 20 dígitos, até 100 destinatários e texto de até 5.000 caracteres. O processador trata até 300 agendadas por execução; o restante fica para a próxima rodada.
 
-Não foi realizada publicação nesta sessão. O agendamento foi verificado pela lógica de backend local; sua execução automática na nuvem é a verificação final pendente da etapa 10.
+Publicação realizada em 04/10/2026: Hosting, regras, índices e onze Functions ativas. Cloud Scheduler habilitado a cada minuto. Cadastro, conexão, contato e envio imediato foram verificados no site. A retenção de imagens de Functions está configurada para um dia. A primeira execução da rotina pode levar alguns minutos após a criação do job. Uma mensagem agendada mudou automaticamente para Enviada sem navegador aberto; verificação final concluída às 18:02.
