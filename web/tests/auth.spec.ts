@@ -166,7 +166,7 @@ test('falha de rede permite nova tentativa e limita a uma submissão por vez', a
   await expect(page).toHaveURL('/conexoes')
 })
 
-test('Firestore continua rejeitando acesso anônimo, leitura entre contas e gravação direta', async ({ request }) => {
+test('Firestore permite leitura pelo dono e rejeita acesso anônimo, outra conta e gravação direta', async ({ request }) => {
   const accountA = await authenticate(request, newEmail(), 'signUp')
   const accountB = await authenticate(request, newEmail(), 'signUp')
   const documentUrl = `${firestoreEndpoint}/connections/auth-test-${crypto.randomUUID()}`
@@ -179,10 +179,12 @@ test('Firestore continua rejeitando acesso anônimo, leitura entre contas e grav
   try {
     const anonymous = await request.get(documentUrl)
     expect(anonymous.status()).toBe(403)
+    const ownRead = await request.get(documentUrl, { headers: { Authorization: `Bearer ${accountA.idToken}` } })
+    expect(ownRead.status()).toBe(200)
     for (const idToken of [accountA.idToken, accountB.idToken]) {
       const headers = { Authorization: `Bearer ${idToken}` }
       const read = await request.get(documentUrl, { headers })
-      expect(read.status()).toBe(403)
+      expect(read.status()).toBe(idToken === accountA.idToken ? 200 : 403)
       const write = await request.patch(documentUrl, {
         headers, data: { fields: { tenantId: { stringValue: accountB.localId } } },
       })

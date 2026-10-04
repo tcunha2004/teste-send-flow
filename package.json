@@ -10,13 +10,17 @@
     "node": "22.x"
   },
   "scripts": {
+    "test:smoke": "npm run build --workspace functions && node scripts/smoke.mjs",
+    "build:production": "VITE_USE_FIREBASE_EMULATORS=false npm run build",
+    "deploy": "npm run build:production && firebase deploy --only firestore,functions,hosting --project teste-send-flow",
     "test:auth": "npm run test:auth --workspace web",
     "dev": "npm run dev --workspace web",
     "emulators": "npm run build --workspace functions && node scripts/start-emulators.mjs",
     "build": "npm run build --workspaces",
     "typecheck": "npm run typecheck --workspaces",
     "lint": "npm run lint --workspace web",
-    "firebase": "firebase"
+    "firebase": "firebase",
+    "test:e2e": "npm run test:e2e --workspace web"
   },
   "devDependencies": {
     "firebase-tools": "^15.32.1"

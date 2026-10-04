@@ -219,19 +219,21 @@ O foco é entregar o fluxo pedido com código organizado, dados bem modelados, i
 ## 12. Checklist de conclusão
 
 - [x] Cadastro, login e saída funcionando;
-- [ ] CRUD de conexões;
-- [ ] CRUD de contatos dentro de cada conexão;
-- [ ] Seleção de um ou mais contatos para uma mensagem;
-- [ ] Simulação de envio imediato;
-- [ ] Agendamento para data e horário futuros;
-- [ ] Mudança automática de Agendada para Enviada por Cloud Function;
-- [ ] Listagem, filtro, edição e exclusão de mensagens;
-- [ ] Atualizações em tempo real nas listagens;
-- [ ] Dados de clientes diferentes isolados por regras e validações;
-- [ ] Verificação do isolamento usando pelo menos duas contas;
-- [ ] Verificação de que o agendamento funciona com a aplicação fechada;
-- [ ] Nenhuma subcoleção no Firestore;
-- [ ] Frontend em `/web` e backend em `/functions`;
-- [ ] React, TypeScript, Vite, Material UI e Tailwind CSS em uso;
-- [ ] Código organizado com funções e componentes funcionais;
-- [ ] Instruções para configurar e executar o projeto documentadas ao final do desenvolvimento.
+- [x] CRUD de conexões;
+- [x] CRUD de contatos dentro de cada conexão;
+- [x] Seleção de um ou mais contatos para uma mensagem;
+- [x] Simulação de envio imediato;
+- [x] Agendamento para data e horário futuros;
+- [x] Mudança automática de Agendada para Enviada por Cloud Function;
+- [x] Listagem, filtro, edição e exclusão de mensagens;
+- [x] Atualizações em tempo real nas listagens;
+- [x] Dados de clientes diferentes isolados por regras e validações;
+- [x] Verificação do isolamento usando pelo menos duas contas;
+- [x] Verificação de que o agendamento funciona com a aplicação fechada;
+- [x] Nenhuma subcoleção no Firestore;
+- [x] Frontend em `/web` e backend em `/functions`;
+- [x] React, TypeScript, Vite, Material UI e Tailwind CSS em uso;
+- [x] Código organizado com funções e componentes funcionais;
+- [x] Instruções para configurar e executar o projeto documentadas ao final do desenvolvimento.
+
+Verificações locais concluídas. A execução automática e o link na nuvem permanecem pendentes conforme a etapa 10 de STEPS.md.

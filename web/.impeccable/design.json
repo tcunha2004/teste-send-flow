@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-04T20:22:54.204933+00:00",
+  "generatedAt": "2026-10-04T20:53:48.562374+00:00",
   "title": "Design System: Broadcast",
   "extensions": {
     "colorMeta": {
@@ -108,6 +108,21 @@
           "oklch(80% 0.046 257)",
           "oklch(95% 0.046 257)"
         ]
+      },
+      "info": {
+        "role": "semantic",
+        "displayName": "Azul de agendamento",
+        "canonical": "#01579b",
+        "tonalRamp": [
+          "oklch(15% 0.1309 251.01)",
+          "oklch(25% 0.1309 251.01)",
+          "oklch(35% 0.1309 251.01)",
+          "oklch(45% 0.1309 251.01)",
+          "oklch(55% 0.1309 251.01)",
+          "oklch(65% 0.1309 251.01)",
+          "oklch(80% 0.1309 251.01)",
+          "oklch(95% 0.1309 251.01)"
+        ]
       }
     },
     "typographyMeta": {
@@ -151,35 +166,36 @@
     {
       "name": "Ação principal",
       "kind": "button",
-      "description": "Referência para implementação futura: uma ação principal por região.",
+      "description": "Uma ação principal por região de tarefa.",
       "html": "<button class=\"ds-button ds-primary\">Criar conexão</button>",
       "css": ".ds-button{font:500 14px/1.75 system-ui,sans-serif;padding:8px 16px;min-height:44px;border-radius:4px;border:1px solid transparent;cursor:pointer;} .ds-button:focus-visible{outline:2px solid #2563eb;outline-offset:3px;} .ds-button:disabled{opacity:.5;cursor:default;}.ds-primary{background:#2563eb;color:#fff;} .ds-primary:hover:not(:disabled){background:rgb(25,69,164);} .ds-primary:active:not(:disabled){background:#163b8c;}"
     },
     {
       "name": "Ação secundária",
       "kind": "button",
-      "description": "Referência para implementação futura: ações de apoio.",
+      "description": "Ações de apoio com menor destaque.",
       "html": "<button class=\"ds-button ds-secondary\">Cancelar</button>",
       "css": ".ds-button{font:500 14px/1.75 system-ui,sans-serif;padding:8px 16px;min-height:44px;border-radius:4px;border:1px solid transparent;cursor:pointer;} .ds-button:focus-visible{outline:2px solid #2563eb;outline-offset:3px;} .ds-button:disabled{opacity:.5;cursor:default;}.ds-secondary{background:#fff;color:#2563eb;border-color:#2563eb;} .ds-secondary:hover:not(:disabled){background:#eff6ff;} .ds-secondary:active:not(:disabled){background:#dbeafe;}"
     },
     {
       "name": "Campo de texto",
       "kind": "input",
-      "description": "Referência para implementação futura: rótulo persistente e foco visível.",
+      "description": "Rótulo persistente e foco visível nos formulários.",
       "html": "<label class=\"ds-field\">Nome da conexão<input class=\"ds-input\" type=\"text\" placeholder=\"Ex.: Clientes da loja\"></label>",
       "css": ".ds-field{display:grid;gap:8px;color:rgba(0,0,0,.87);font:400 14px/1.5 system-ui,sans-serif;} .ds-input{font:400 16px/1.5 system-ui,sans-serif;min-height:44px;padding:8px 12px;border:1px solid #64748b;border-radius:4px;background:#fff;color:rgba(0,0,0,.87);} .ds-input:hover{border-color:#334155;} .ds-input:focus-visible{outline:2px solid #2563eb;outline-offset:2px;} .ds-input::placeholder{color:#64748b;}"
     },
     {
-      "name": "Chip de identidade",
+      "name": "Status agendado",
       "kind": "chip",
-      "description": "Representação da identificação Broadcast presente na tela inicial.",
-      "html": "<span class=\"ds-chip\">Broadcast</span>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;border-radius:16px;padding:3px 12px;background:#2563eb;color:#fff;font:400 13px/18px system-ui,sans-serif;}"
+      "description": "Mensagem que aguarda processamento do backend; o texto identifica o estado.",
+      "html": "<span class=\"ds-chip\">Agendada</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;height:24px;border-radius:16px;padding:0 8px;background:#01579b;color:#fff;font:400 13px/18px system-ui,sans-serif;}",
+      "refersTo": "chip-scheduled"
     },
     {
       "name": "Painel",
       "kind": "card",
-      "description": "Representação da superfície clara e plana presente na tela inicial.",
+      "description": "Superfície clara e plana compartilhada por formulários e conteúdo.",
       "html": "<section class=\"ds-panel\"><h2 class=\"ds-title\">Suas mensagens, organizadas.</h2><p class=\"ds-body\">Gerencie conexões, organize contatos e prepare mensagens para enviar agora ou agendar.</p></section>",
       "css": ".ds-panel{padding:32px;border:1px solid oklch(92.9% .013 255.508);border-radius:1rem;background:#fff;color:rgba(0,0,0,.87);font-family:system-ui,sans-serif;} .ds-title{margin:0 0 16px;font-size:2.125rem;line-height:1.235;font-weight:600;} .ds-body{margin:0;color:oklch(44.6% .043 257.281);font-size:16px;line-height:1.5;}",
       "refersTo": "panel"
@@ -187,7 +203,7 @@
   ],
   "narrative": {
     "northStar": "Organização tranquila",
-    "overview": "Uma interface clara e funcional, em que o usuário identifica a conexão atual, encontra seus contatos e entende o estado de cada mensagem. A personalidade aparece no azul das ações, no ritmo dos espaços e no texto direto. Os componentes Material UI fornecem uma linguagem familiar para tarefas recorrentes.\n\nEste guia vale para cadastro, login, conexões, contatos e mensagens. A direção foi confirmada pelo usuário. O frontmatter registra a base encontrada no tema e na tela inicial; as orientações abaixo estabelecem os padrões para as próximas implementações. Não significa que as telas ou todos os componentes já foram construídos ou verificados.",
+    "overview": "Uma interface clara e funcional, em que o usuário identifica a conexão atual, encontra seus contatos e entende o estado de cada mensagem. A personalidade aparece no azul das ações, no ritmo dos espaços e no texto direto. Os componentes Material UI fornecem uma linguagem familiar para tarefas recorrentes.\n\nEste guia vale para cadastro, login, conexões, contatos e mensagens. A direção foi confirmada pelo usuário. O frontmatter registra a base do tema e das telas de autenticação, conexões, contatos e mensagens. As orientações abaixo preservam os padrões compartilhados; a conclusão e a verificação de cada fluxo continuam registradas em STEPS.md.",
     "keyCharacteristics": [
       "Fundos claros, superfícies brancas e destaque azul.",
       "Tipografia do sistema com hierarquia curta e legível.",

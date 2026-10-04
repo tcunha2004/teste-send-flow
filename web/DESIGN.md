@@ -3,6 +3,7 @@ name: Broadcast
 description: Interface clara e funcional para organizar contatos e mensagens simuladas.
 colors:
   primary: "#2563eb"
+  info: "#01579b"
   surface: "#ffffff"
   canvas: "oklch(98.4% 0.003 247.858)"
   border: "oklch(92.9% 0.013 255.508)"
@@ -41,6 +42,11 @@ components:
     textColor: "{colors.text}"
     rounded: "{rounded.panel}"
     padding: "32px"
+  chip-scheduled:
+    backgroundColor: "{colors.info}"
+    textColor: "{colors.surface}"
+    rounded: "16px"
+    height: "24px"
   panel-wide:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text}"
@@ -56,7 +62,7 @@ components:
 
 Uma interface clara e funcional, em que o usuário identifica a conexão atual, encontra seus contatos e entende o estado de cada mensagem. A personalidade aparece no azul das ações, no ritmo dos espaços e no texto direto. Os componentes Material UI fornecem uma linguagem familiar para tarefas recorrentes.
 
-Este guia vale para cadastro, login, conexões, contatos e mensagens. A direção foi confirmada pelo usuário. O frontmatter registra a base encontrada no tema e na tela inicial; as orientações abaixo estabelecem os padrões para as próximas implementações. Não significa que as telas ou todos os componentes já foram construídos ou verificados.
+Este guia vale para cadastro, login, conexões, contatos e mensagens. A direção foi confirmada pelo usuário. O frontmatter registra a base do tema e das telas de autenticação, conexões, contatos e mensagens. As orientações abaixo preservam os padrões compartilhados; a conclusão e a verificação de cada fluxo continuam registradas em STEPS.md.
 
 **Key Characteristics:**
 
@@ -66,7 +72,7 @@ Este guia vale para cadastro, login, conexões, contatos e mensagens. A direçã
 - Ações explícitas, estados compreensíveis e comportamento consistente.
 - Adaptação ao celular sem perder ações ou informações essenciais.
 
-Fontes da base atual: `src/main.tsx`, `src/app/App.tsx`, `src/index.css` e os valores resolvidos do tema Material UI e do Tailwind instalado. `PRODUCT.md` guarda o contexto do produto. `../PROJECT.md`, `../ARCHITECTURE.md` e `../STEPS.md` continuam sendo as autoridades de escopo, arquitetura e sequência de implementação.
+Fontes da base atual: `src/main.tsx`, `src/index.css`, `src/components/AppHeader.tsx`, `src/features/auth/AuthPage.tsx`, `src/features/connections/ConnectionsPage.tsx`, `src/features/connections/ConnectionDetailPage.tsx`, `src/features/contacts/ContactsPage.tsx`, `src/features/messages/MessagesPage.tsx` e os valores resolvidos do tema Material UI e do Tailwind instalado. `PRODUCT.md` guarda o contexto do produto. `../PROJECT.md`, `../ARCHITECTURE.md` e `../STEPS.md` continuam sendo as autoridades de escopo, arquitetura e sequência de implementação.
 
 ## Colors
 
@@ -85,7 +91,7 @@ Fontes da base atual: `src/main.tsx`, `src/app/App.tsx`, `src/index.css` e os va
 
 ### Estados semânticos
 
-Nas próximas telas, usar as cores semânticas do tema Material UI: `success` para sucesso e **Enviada**, `info` para **Agendada**, `warning` para atenção e `error` para falhas e ações destrutivas. Não criar uma paleta própria por funcionalidade. `info` e os demais estados devem ser centralizados no tema quando forem implementados.
+As telas usam as cores semânticas do tema Material UI: `success` para sucesso e **Enviada**, `info` para **Agendada**, `warning` para atenção e `error` para falhas e ações destrutivas. O **Azul de agendamento** (`info`) é centralizado em `src/main.tsx`; seu fundo com texto branco atende ao contraste mínimo de texto normal. Os demais estados conservam os padrões do Material UI. Não criar uma paleta própria por funcionalidade.
 
 Um status sempre deve incluir o texto. **Enviada** significa envio simulado, sem confirmação de entrega. **Agendada** significa que aguarda processamento do backend; a interface não deve antecipar a mudança de status por um temporizador local.
 
@@ -105,7 +111,7 @@ Um status sempre deve incluir o texto. **Enviada** significa envio simulado, sem
 - **Título de seção:** usar a variante `h6` do Material UI. É uma orientação para telas futuras, não um token customizado existente.
 - **Corpo:** papel `body` para instruções, texto de mensagens e conteúdo principal.
 - **Texto de apoio:** papel `supporting` para data, horário, contagem e ajuda breve.
-- **Rótulos e ações:** usar as variantes do Material UI; escrever em português do Brasil, com frases curtas e verbos concretos. Preferir capitalização de frase nos novos botões, centralizando essa alteração no tema quando implementada.
+- **Rótulos e ações:** usar as variantes do Material UI; escrever em português do Brasil, com frases curtas e verbos concretos. Usar capitalização de frase nos botões, centralizada no override de `MuiButton` no tema.
 
 **The Hierarchy Rule.** Uma tela tem um título principal e uma sequência coerente de seções. A variante visual não substitui a semântica: definir `component="h1"`, `h2` e demais níveis conforme a estrutura.
 
@@ -115,9 +121,9 @@ Não truncar o texto de uma mensagem sem oferecer acesso ao conteúdo completo. 
 
 ### Ritmo e densidade
 
-Usar a escala de espaçamento do frontmatter. O passo básico é de quatro pixels; oito, dezesseis e vinte e quatro organizam controles e grupos. Os passos maiores separam seções. A tela provisória utiliza um painel estreito centralizado: essa composição não é uma obrigação para as telas internas.
+Usar a escala de espaçamento do frontmatter. O passo básico é de quatro pixels; oito, dezesseis e vinte e quatro organizam controles e grupos. Os passos maiores separam seções. A autenticação utiliza um painel estreito centralizado; as telas internas usam um contêiner mais amplo e listas responsivas.
 
-Nas próximas telas, manter dezesseis pixels nas margens em celular e vinte e quatro ou trinta e dois em telas maiores. Agrupar rótulo, campo e ajuda; separar grupos e seções com espaço maior. Não espalhar margens arbitrárias em cada componente.
+Manter dezesseis pixels nas margens em celular e vinte e quatro ou trinta e dois em telas maiores. Agrupar rótulo, campo e ajuda; separar grupos e seções com espaço maior. Não espalhar margens arbitrárias em cada componente.
 
 ### Estrutura das telas
 
@@ -137,7 +143,7 @@ No celular, empilhar campos e ações quando não couberem, permitir filtros em 
 
 ## Elevation & Depth
 
-Superfícies planas com bordas suaves são a base. O painel inicial usa `Paper` com `elevation={0}`. Não colocar sombras fortes em todos os cards.
+Superfícies planas com bordas suaves são a base. Os painéis e itens das listas usam `Paper` com `elevation={0}`. Não colocar sombras fortes em todos os cards.
 
 Reservar elevação para elementos temporariamente sobrepostos: menus, popovers e diálogos. Utilizar a elevação do Material UI, sem criar sombras independentes por tela. Evitar cards aninhados quando um subtítulo, espaço ou divisor resolve a organização.
 
@@ -151,7 +157,7 @@ Controles seguem a forma padrão do Material UI (`control`); painéis principais
 
 ## Components
 
-A implementação atual contém `Paper`, `Typography` e `Chip`. Os padrões a seguir orientam a criação dos demais componentes nas etapas previstas; não representam funcionalidade já disponível.
+A implementação utiliza `Paper`, `Typography`, `Button`, `TextField`, `Chip`, `Alert`, `CircularProgress`, `Dialog`, `Snackbar`, `Tabs`/`Tab`, `Checkbox` e `RadioGroup`/`Radio`. Os padrões abaixo orientam seu uso consistente entre autenticação, conexões, contatos e mensagens.
 
 | Padrão | Componente base | Regra global |
 | --- | --- | --- |

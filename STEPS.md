@@ -24,64 +24,68 @@ Verificado: cinco testes de integração com Chromium e emuladores passaram (`np
 
 ## 3. Preparar dados e segurança
 
-- [ ] Definir os tipos de conexões, contatos e mensagens conforme a modelagem proposta.
-- [ ] Configurar regras para leitura apenas pelo dono e bloquear gravações diretas pelo frontend.
-- [ ] Preparar no backend a validação de autenticação, campos e propriedade dos documentos.
+- [x] Definir os tipos de conexões, contatos e mensagens conforme a modelagem proposta.
+- [x] Configurar regras para leitura apenas pelo dono e bloquear gravações diretas pelo frontend.
+- [x] Preparar no backend a validação de autenticação, campos e propriedade dos documentos.
 
 **Verificar:** acesso sem login e acesso a dados de outra conta são rejeitados. Repetir essa verificação nas próximas etapas.
 
 ## 4. Implementar conexões
 
-- [ ] Criar Functions para cadastrar, editar e excluir conexões.
-- [ ] Criar a tela com listagem em tempo real e formulários.
-- [ ] Garantir que a exclusão também limpe contatos e mensagens vinculados, com validação do cliente.
+- [x] Criar Functions para cadastrar, editar e excluir conexões.
+- [x] Criar a tela com listagem em tempo real e formulários.
+- [x] Garantir que a exclusão também limpe contatos e mensagens vinculados, com validação do cliente.
 
 **Verificar:** CRUD completo e isolamento usando duas contas.
 
 ## 5. Implementar contatos
 
-- [ ] Criar Functions para cadastrar, editar e excluir contatos, validando a conexão.
-- [ ] Criar a tela de contatos da conexão com listagem em tempo real.
+- [x] Criar Functions para cadastrar, editar e excluir contatos, validando a conexão.
+- [x] Criar a tela de contatos da conexão com listagem em tempo real.
 
 **Verificar:** CRUD completo; contatos de uma conexão não aparecem em outra; excluir uma conexão limpa seus contatos.
 
 ## 6. Implementar envio imediato
 
-- [ ] Criar seleção de contatos e formulário de mensagem.
-- [ ] Criar a Function que valida os destinatários e salva a mensagem como **Enviada**, com horário do backend e cópia dos destinatários.
-- [ ] Listar mensagens em tempo real.
+- [x] Criar seleção de contatos e formulário de mensagem.
+- [x] Criar a Function que valida os destinatários e salva a mensagem como **Enviada**, com horário do backend e cópia dos destinatários.
+- [x] Listar mensagens em tempo real.
 
 **Verificar:** envio simulado funciona; texto vazio, ausência de destinatários e contatos de outra conexão são rejeitados.
 
 ## 7. Implementar agendamento
 
-- [ ] Adicionar data e horário ao formulário e salvar mensagens futuras como **Agendadas**.
-- [ ] Criar a rotina periódica que processa mensagens vencidas com transações.
-- [ ] Registrar os índices necessários e testar a lógica localmente com execução controlada.
+- [x] Adicionar data e horário ao formulário e salvar mensagens futuras como **Agendadas**.
+- [x] Criar a rotina periódica que processa mensagens vencidas com transações.
+- [x] Registrar os índices necessários e testar a lógica localmente com execução controlada.
 
 **Verificar:** horários passados são rejeitados; mensagens vencidas mudam para **Enviadas**; repetir a rotina não reprocessa mensagens enviadas.
 
 ## 8. Completar o gerenciamento de mensagens
 
-- [ ] Implementar filtros de enviadas e agendadas.
-- [ ] Implementar edição e exclusão conforme as decisões do `PROJECT.md`.
-- [ ] Tratar conflitos entre edição, exclusão e processamento agendado.
+- [x] Implementar filtros de enviadas e agendadas.
+- [x] Implementar edição e exclusão conforme as decisões do `PROJECT.md`.
+- [x] Tratar conflitos entre edição, exclusão e processamento agendado.
 
 **Verificar:** filtros e CRUD funcionam; mensagens excluídas não reaparecem; excluir uma conexão limpa suas mensagens.
 
 ## 9. Revisar a aplicação
 
-- [ ] Ajustar navegação, formulários, estados de carregamento, listas vazias e mensagens de erro.
-- [ ] Verificar o fluxo completo com duas contas, incluindo tentativas de acesso indevido ao Firestore e às Functions.
-- [ ] Executar build, checagem de tipos e os testes relevantes para segurança e agendamento.
+- [x] Ajustar navegação, formulários, estados de carregamento, listas vazias e mensagens de erro.
+- [x] Verificar o fluxo completo com duas contas, incluindo tentativas de acesso indevido ao Firestore e às Functions.
+- [x] Executar build, checagem de tipos e os testes relevantes para segurança e agendamento.
 
 **Verificar:** os requisitos do `PROJECT.md` estão atendidos e as verificações passam.
 
+Verificado em 04/10/2026: `npm run test:smoke` passou com CRUD completo, duas contas, rejeição de acesso sem login e entre clientes, bloqueio de gravações diretas, contatos de outra conexão, validação de texto/destinatários/horários, preservação de histórico, edição de enviadas sem novo envio, processamento controlado de agendadas, idempotência, exclusão sem recriação e cascata. Os seis testes de navegador passaram, incluindo o fluxo de conexão, contato, envio, agendamento, filtros, edição e exclusão. Typecheck, lint e build de produção passaram. Conexões, contatos e mensagens foram inspecionados em desktop e celular. A execução periódica na nuvem ainda depende da publicação da etapa 10.
+
 ## 10. Publicar e documentar
 
-- [ ] Configurar o projeto Firebase na nuvem, Authentication e Firestore; habilitar o faturamento necessário para Functions e agendamento.
+- [x] Configurar o projeto Firebase na nuvem, Authentication e Firestore; habilitar o faturamento necessário para Functions e agendamento.
 - [ ] Publicar regras, índices, Functions e frontend; configurar o frontend para os serviços da nuvem.
 - [ ] Agendar uma mensagem, fechar a aplicação e verificar depois a alteração automática de status.
-- [ ] Finalizar o README com instalação, configuração, execução local, publicação e decisões técnicas.
+- [x] Finalizar o README com instalação, configuração, execução local, publicação e decisões técnicas.
 
 **Verificar:** a aplicação publicada funciona e outra pessoa consegue executar o projeto seguindo o README.
+
+Em publicação: Blaze habilitado pelo usuário e CLI autenticada; Authentication por email/senha e banco Firestore nativo existentes foram conferidos. `npm run deploy` iniciado às 17:51. A criação das Functions e do Scheduler e a verificação do link permanecem pendentes até a conclusão do primeiro deploy.

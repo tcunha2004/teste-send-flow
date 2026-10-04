@@ -1,134 +1,126 @@
 # Broadcast
 
-Aplicação de broadcast com React, TypeScript e Firebase. O envio será simulado. As etapas 1 e 2 estão implementadas: estrutura, emuladores e autenticação com email e senha. Os demais fluxos serão implementados conforme o roteiro.
+Aplicação de broadcast com React, TypeScript, Vite, Material UI, Tailwind CSS e Firebase. Envio exclusivamente simulado, sem integração com SMS ou WhatsApp.
 
-Referências: [escopo](./PROJECT.md), [arquitetura](./ARCHITECTURE.md) e [etapas](./STEPS.md).
+Implementados: autenticação, CRUD de conexões e contatos, seleção de destinatários, envio imediato, agendamento, filtros e edição/exclusão de mensagens. As listas atualizam em tempo real e cada conta acessa apenas seus dados. As etapas 1–9 foram verificadas localmente. A publicação e a execução automática na nuvem estão pendentes.
 
-Para criar interfaces, siga o [design system global](./web/DESIGN.md), com a direção visual aprovada e os padrões de componentes e estados para as próximas telas.
+Referências: [escopo](./PROJECT.md), [arquitetura](./ARCHITECTURE.md), [etapas](./STEPS.md) e [design system](./web/DESIGN.md).
 
-## Requisitos
+## Instalar e configurar
 
-- Node.js 22 e npm;
-- Java 21 para o emulador do Firestore.
-
-No macOS com Homebrew, instale Java com `brew install openjdk@21`. O comando de emuladores detecta essa instalação automaticamente. Em outros sistemas, configure `JAVA_HOME` ou disponibilize `java` no `PATH`.
-
-A Firebase CLI é uma dependência do projeto; não precisa ser instalada globalmente.
-
-## Configuração
-
-Na raiz, instale as dependências de `/web` e `/functions`:
+Requisitos: Node.js 22, npm e Java 21 para o emulador do Firestore.
 
 ```bash
 npm install
-```
-
-Copie `web/.env.example` para `web/.env.local` e preencha os campos com a configuração da aplicação Web do Firebase:
-
-```bash
 cp web/.env.example web/.env.local
 ```
 
-O `.env.local` desta máquina já foi preenchido a partir do `.env` original, que foi preservado. Os arquivos com valores locais são ignorados pelo Git.
+Preencha `web/.env.local` com a configuração Web do Firebase. Nesta máquina, o arquivo já está preenchido para `teste-send-flow`. Os arquivos `.env` ficam fora do Git e não devem conter credenciais administrativas no frontend.
 
-Mantenha `VITE_USE_FIREBASE_EMULATORS=true` para desenvolver localmente. Nesse modo, frontend e emuladores usam o projeto `demo-broadcast`, com dados separados do projeto na nuvem. Reinicie o Vite após alterar o `.env.local`.
+Para desenvolvimento, mantenha `VITE_USE_FIREBASE_EMULATORS=true`. Os serviços usam `demo-broadcast`, sem alterar os dados da nuvem. Reinicie o Vite ao alterar variáveis.
+
+No macOS, `brew install openjdk@21` instala o Java; o script detecta a instalação Homebrew. Em outros sistemas, configure `JAVA_HOME` ou `java` no PATH.
 
 ## Executar localmente
 
-No primeiro terminal, na raiz:
+Em dois terminais na raiz:
 
 ```bash
 npm run emulators
 ```
 
-No segundo terminal, também na raiz:
-
 ```bash
 npm run dev
 ```
 
-- Aplicação: http://127.0.0.1:5180
-- Painel dos emuladores: http://127.0.0.1:4000
-- Authentication: porta 9099;
-- Firestore: porta 8085;
-- Functions: porta 5001.
+Aplicação: http://127.0.0.1:5180. Painel dos emuladores: http://127.0.0.1:4000. Portas: Auth 9099, Firestore 8085 e Functions 5001. O primeiro início baixa os emuladores. Encerre com Ctrl+C.
 
-O primeiro início baixa os emuladores e precisa de internet. Não é necessário fazer login na Firebase CLI para usar o projeto de demonstração. Encerre os processos com `Ctrl+C`.
-
-As portas 5180 e 8085 foram escolhidas porque as portas padrão já estavam ocupadas nesta máquina. Se precisar alterá-las, ajuste `web/vite.config.ts` para o frontend e mantenha as portas do Firebase iguais em `firebase.json` e `web/src/lib/firebase.ts`.
-
-Os dados locais são descartados ao encerrar os emuladores. Para reutilizá-los:
+Para preservar dados locais:
 
 ```bash
 npm run emulators -- --import=.emulator-data --export-on-exit=.emulator-data
 ```
 
-Esse comando cria o diretório na primeira saída e carrega os dados nas próximas execuções.
-
-O comando de emuladores compila as Functions antes de iniciar. Para recompilar automaticamente durante alterações no backend, abra outro terminal e execute:
+Para recompilar Functions durante desenvolvimento:
 
 ```bash
 npm run watch --workspace functions
 ```
 
-## Verificações
+## Fluxo de uso
 
-### Autenticação
+1. Crie uma conta em `/cadastro` ou entre em `/login`.
+2. Crie uma conexão e abra sua lista de contatos.
+3. Cadastre contatos com nome e telefone.
+4. Abra a aba **Mensagens**, selecione destinatários e escreva o texto.
+5. Escolha **Enviar agora** ou **Agendar**, informando um horário futuro local.
+6. Consulte os status **Enviada** e **Agendada** e use os filtros, edição ou exclusão.
 
-Abra `/cadastro` para criar uma conta ou `/login` para entrar. A sessão persiste após recarregar a página; `/conexoes` exige autenticação e oferece a ação **Sair**. Login e saída são sincronizados entre abas do mesmo navegador. O gerenciamento de conexões será implementado na etapa 4.
+O SDK mantém a sessão e sincroniza entrada/saída entre abas. Excluir uma conexão também remove seus contatos e mensagens. Excluir um contato preserva o histórico de destinatários nas mensagens. Editar uma enviada não simula um novo envio.
 
-Para executar os cinco testes de integração de autenticação, mantenha os emuladores de Authentication e Firestore ativos com `npm run emulators` e `VITE_USE_FIREBASE_EMULATORS=true` no frontend. Na primeira execução, instale o navegador de testes:
+## Verificações essenciais
+
+Com os emuladores ativos:
+
+```bash
+npm run test:smoke
+npm run typecheck
+npm run lint
+npm run build:production
+```
+
+O smoke testa CRUD, duas contas, isolamento de leitura/mutações, bloqueio de gravações diretas, relações entre contatos e conexões, validação de mensagens, histórico, cascata e processamento de agendadas com idempotência. O relógio é controlado nesse teste; ele usa apenas `demo-broadcast` e remove suas fixtures. Uma rejeição PERMISSION_DENIED no log é esperada na tentativa de escrita proibida.
+
+Para o navegador, instale Chromium uma vez e execute:
 
 ```bash
 npx playwright install chromium
-npm run test:auth
+npm run test:e2e
 ```
 
-O Playwright inicia o Vite automaticamente quando necessário. Os testes usam Chromium, criam contas e um documento temporário no projeto `demo-broadcast`, e removem somente as fixtures criadas. Verificam cadastro, login, restauração, rotas protegidas, saída entre abas, troca de contas, validação, erros de rede e rejeição de acesso direto ao Firestore. Como as regras ainda bloqueiam tudo, a leitura do próprio cliente também deve ser rejeitada nesta etapa.
+São seis testes: cinco de autenticação/segurança e um fluxo completo de conexão, contato e mensagens. O Playwright inicia o Vite quando necessário. `npm run test:auth` executa somente os cinco testes de autenticação.
 
-### Build e qualidade
+Typecheck, lint, smoke, seis testes de navegador e build de produção passaram. As telas foram inspecionadas em desktop e celular. O build ainda informa um bundle acima de 500 kB; isso não impede a execução.
+
+## Publicar e obter o link
+
+A publicação completa exige **plano Blaze com faturamento habilitado**: Cloud Functions e Cloud Scheduler não estão disponíveis neste fluxo no Spark. Blaze cobra por uso e possui cotas gratuitas; não há garantia de custo zero. Consulte os [preços oficiais](https://firebase.google.com/pricing).
+
+No [console do projeto](https://console.firebase.google.com/project/teste-send-flow/overview):
+
+1. Habilite Blaze e vincule a conta de faturamento.
+2. Em Authentication → Sign-in method, habilite **Email/Password**.
+3. Crie o banco **Cloud Firestore**, no modo nativo e com regras de produção. O deploy publicará as regras próprias.
+4. Confira a configuração Web em `web/.env.local` para o projeto `teste-send-flow`.
+
+Na raiz:
 
 ```bash
-npm run typecheck
-npm run lint
-npm run build
+npm run firebase -- login
+npm run deploy
 ```
 
-Uma função callable `health` permite verificar o backend local sem acessar dados de clientes:
+`npm run deploy` gera o frontend com `VITE_USE_FIREBASE_EMULATORS=false` e publica regras, índices, Functions e Hosting. Não precisa alterar a configuração local usada no desenvolvimento. A CLI pode solicitar confirmação da retenção de imagens de Functions; configure a retenção indicada no prompt. Os índices podem levar alguns minutos para ficar prontos após o primeiro deploy.
 
-```bash
-curl -X POST \
-  http://127.0.0.1:5001/demo-broadcast/us-central1/health \
-  -H 'Content-Type: application/json' \
-  -d '{"data":{}}'
-```
+O comando imprime a **Hosting URL**: esse é o link para entregar. Para o site padrão do projeto, a URL esperada é `https://teste-send-flow.web.app`; só considere o link válido após o deploy e a verificação.
 
-O resultado esperado é `{"result":{"status":"ok"}}`.
+Depois da publicação, faça cadastro, crie conexão/contato, envie uma mensagem e agende outra. Feche a aplicação, aguarde o horário e a próxima execução bem-sucedida da rotina, então confirme o status **Enviada**. A função executa a cada minuto; não promete precisão no segundo exato.
 
-As regras do Firestore começam com todo acesso do frontend bloqueado. As permissões de leitura por cliente serão implementadas na etapa de segurança.
+Caso os índices ainda estejam criando, aguarde antes de repetir as consultas. Firebase Hosting já está configurado com rewrite das rotas para `index.html`.
 
-Na preparação inicial, build, checagem de tipos e lint passaram. Foram verificadas a inicialização dos emuladores, a chamada `health`, a criação de uma conta local e a rejeição de leitura pública no Firestore.
-
-Na etapa 2, os cinco testes de autenticação, build, checagem de tipos e lint passaram. Login, cadastro e a tela privada foram inspecionados em desktop e celular. O build ainda informa um bundle acima de 500 kB; a divisão de código pode ser revisada quando as demais telas forem implementadas.
-
-O `npm audit` ainda aponta alertas em dependências transitivas dos SDKs e da CLI Firebase. O `npm audit fix` sem mudanças incompatíveis foi executado; não aplicamos `--force`, que propõe trocar versões principais dos pacotes. Essa revisão deve ser retomada antes da publicação.
-
-## Estrutura
+## Organização e decisões
 
 ```text
-web/          Frontend e inicialização do SDK Firebase
-functions/    Cloud Functions e inicialização do Admin SDK
-scripts/      Inicialização local dos emuladores
+web/src/app/          Rotas e providers
+web/src/features/     Autenticação, conexões, contatos e mensagens
+web/src/lib/          Firebase, tipos, chamadas e hooks de leitura
+web/src/components/   Header compartilhado
+functions/src/        CRUD, validações e processamento de agendadas
+scripts/              Emuladores e smoke local
 ```
 
-O npm organiza `web` e `functions` como workspaces: cada parte tem suas dependências, com um único `package-lock.json` na raiz.
+O projeto usa npm workspaces e um único lockfile. A lógica é funcional, com componentes e hooks, sem classes próprias. Firestore usa somente coleções na raiz (`connections`, `contacts`, `messages`). Todas as alterações passam por Functions; o tenant é obtido do token, não do formulário. Transações tratam concorrência e evitam recriar mensagens excluídas. A exclusão de conexão bloqueia novos filhos e limpa dados em lotes.
 
-## Projeto na nuvem
+Limites do teste: nomes de até 100 caracteres, telefones com 6 a 20 dígitos, até 100 destinatários e texto de até 5.000 caracteres. O processador trata até 300 agendadas por execução; o restante fica para a próxima rodada.
 
-O projeto real está associado em `.firebaserc`. Não foi feita nenhuma publicação nesta etapa.
-
-Para trabalhar com a nuvem, será necessário autenticar a CLI (`npm run firebase -- login`) e, para publicar Functions, habilitar o plano Blaze. As Functions usam inicialmente a região `us-central1`, também configurada no frontend.
-
-Na etapa de publicação, configuraremos o frontend com `VITE_USE_FIREBASE_EMULATORS=false`, publicaremos regras, índices e Functions e validaremos o agendamento na nuvem. O build gera `web/dist`, configurado para Firebase Hosting.
-
-Documentação: [emuladores Firebase](https://firebase.google.com/docs/emulator-suite), [Functions](https://firebase.google.com/docs/functions/get-started), [Vite](https://vite.dev/guide/), [Tailwind](https://tailwindcss.com/docs/installation/using-vite) e [integração com Material UI](https://mui.com/material-ui/integrations/tailwindcss/tailwindcss-v4/).
+Não foi realizada publicação nesta sessão. O agendamento foi verificado pela lógica de backend local; sua execução automática na nuvem é a verificação final pendente da etapa 10.

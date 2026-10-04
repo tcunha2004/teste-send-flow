@@ -244,3 +244,13 @@ Referências: [Emulator Suite](https://firebase.google.com/docs/emulator-suite),
 - Abrir duas abas e observar as alterações chegando em tempo real.
 
 O [PROJECT.md](./PROJECT.md) define o que devemos entregar. Este arquivo define como as partes vão conversar para cumprir esses requisitos.
+
+## 12. Implementação e verificação local
+
+As operações callable de conexões, contatos e mensagens estão implementadas. O backend valida autenticação, propriedade, relações, nomes de até 100 caracteres, telefones com 6 a 20 dígitos, até 100 destinatários e mensagens de até 5.000 caracteres. A criação e alteração de filhos conferem a conexão em transações.
+
+A exclusão de conexão registra `deleting: true` em uma transação, bloqueando novos filhos, e limpa contatos e mensagens em lotes de até 400 documentos antes de remover a conexão. Uma tentativa interrompida pode ser repetida para concluir a limpeza. O processador também confere que a conexão ainda existe e não está sendo excluída.
+
+`processScheduledMessages` executa a cada minuto e chama `processDueMessages`, que processa até 300 mensagens por execução com transações. A lógica aceita um timestamp controlado nos testes locais; não há endpoint público de processamento administrativo. Mensagens enviadas conservam seu status e horário de envio ao editar. Destinatários já registrados podem ser mantidos quando o contato foi excluído.
+
+As regras permitem apenas leituras do próprio tenant e bloqueiam todas as gravações diretas. As consultas incluem o uid, filtram a conexão quando aplicável, cancelam listeners ao desmontar e descartam resultados antigos na troca do contexto. O teste essencial de backend e o fluxo de navegador passaram; a publicação e a rotina automática na nuvem ainda precisam ser verificadas.

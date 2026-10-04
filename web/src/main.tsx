@@ -7,7 +7,7 @@ import './lib/firebase'
 import './index.css'
 
 const theme = createTheme({
-  palette: { primary: { main: '#2563eb' } },
+  palette: { primary: { main: '#2563eb' }, info: { main: '#01579b' } },
   typography: { fontFamily: 'system-ui, sans-serif' },
   components: {
     MuiButton: { styleOverrides: { root: { textTransform: 'none' } } },
